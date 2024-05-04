@@ -5,8 +5,6 @@ import random
 import numpy as np
 import torch.optim as optim
 
-from torch.autograd import Variable
-
 
 def load_optimizer(optimizer, filename, lr_0=None):
     state_dict = torch.load(filename)
@@ -33,11 +31,6 @@ def regularization(model, mu):
 
 
 def accuracy(out, targets, topk=1):
-    if isinstance(out, Variable):
-        out = out.data
-    if isinstance(targets, Variable):
-        targets = targets.data
-
     if topk == 1:
         _, pred = torch.max(out, 1)
         acc = torch.mean(torch.eq(pred, targets).float())

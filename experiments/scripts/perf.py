@@ -24,7 +24,7 @@ def esf_py(x, k, buffer):
 
     # use buffer below
     buffer.zero_()
-    res = Variable(buffer)
+    res = buffer
     res[:, :-1, 0] = 1
     res[:, 0, 1] = xx[:, 0]
 
@@ -65,7 +65,7 @@ print('-' * 90)
 
 torch.manual_seed(1234)
 
-scores = Variable(torch.randn(batch_size, n_classes))
+scores = torch.randn(batch_size, n_classes)
 target = torch.from_numpy(np.random.randint(n_classes, size=batch_size))
 labels = torch.from_numpy(np.arange(n_classes))
 
@@ -74,7 +74,7 @@ if CUDA:
     labels = labels.cuda()
     scores = scores.cuda()
 
-x_1, x_2 = split(scores, Variable(target), labels)
+x_1, x_2 = split(scores, target, labels)
 x_1.div_(k * tau)
 x_2.div_(k * tau)
 

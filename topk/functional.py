@@ -50,8 +50,8 @@ def Topk_Smooth_SVM(labels, k, tau, alpha=1.):
     def fun(x, y):
         x_1, x_2 = split(x, y, labels)
         # all scores are divided by (k * tau)
-        x_1.div_(k * tau)
-        x_2.div_(k * tau)
+        x_1 = x_1 / (k * tau)
+        x_2 = x_2 / (k * tau)
 
         # term 1: all terms that will *not* include the ground truth score
         # term 2: all terms that will include the ground truth score
@@ -60,8 +60,8 @@ def Topk_Smooth_SVM(labels, k, tau, alpha=1.):
         term_1, term_2 = LogTensor(term_1), LogTensor(term_2)
 
         X_2 = LogTensor(x_2)
-        cst = x_2.data.new(1).fill_(float(alpha) / tau)
-        One_by_tau = LogTensor(ag.Variable(cst, requires_grad=False))
+        cst = torch.full_like(x_2, float(alpha) / tau)
+        One_by_tau = LogTensor(cst)
         Loss_ = term_2 * X_2
 
         loss_pos = (term_1 * One_by_tau + Loss_).torch()
