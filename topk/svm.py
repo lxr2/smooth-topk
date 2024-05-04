@@ -46,8 +46,8 @@ class _SVMLoss(nn.Module):
         self.get_losses()
         return self
     
-    def to(self, device):
-        super().to(device)
+    def to(self, device=None, **kwargs):
+        super().to(device, **kwargs)
         self.get_losses()
         return self
 

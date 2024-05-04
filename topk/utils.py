@@ -8,7 +8,8 @@ def delta(y, labels, alpha=None):
     """
     Compute zero-one loss matrix for a vector of ground truth y
     """
-
+    
+    labels = labels.to(y.device)
     delta = torch.ne(y[:, None], labels[None, :]).float()
 
     if alpha is not None:
@@ -17,6 +18,7 @@ def delta(y, labels, alpha=None):
 
 
 def split(x, y, labels):
+    labels = labels.to(y.device)
     mask = torch.ne(labels[None, :], y[:, None])
 
     # gather result:
