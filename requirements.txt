@@ -1,7 +1,6 @@
 tqdm
-torch>=1.0
+torch>=1.2
 future
 scipy
 numpy
 git+git://github.com/oval-group/logger@v0.3
-torchvision==0.2.0
