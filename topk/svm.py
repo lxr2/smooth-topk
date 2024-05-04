@@ -45,6 +45,11 @@ class _SVMLoss(nn.Module):
         nn.Module.cpu()
         self.get_losses()
         return self
+    
+    def to(self, device):
+        super().to(device)
+        self.get_losses()
+        return self
 
 
 class MaxTop1SVM(_SVMLoss):
